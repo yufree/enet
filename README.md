@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of enet is to ...
+The goal of enet is to perform network analysis between exposome and metabolites. It also include function to peroform network analysis among metabolites adn exposures.
 
 ## Installation
 

@@ -1,0 +1,25 @@
+Package: enet
+Type: Package
+Title: Network Analysis for Exposomics
+Version: 0.1.0
+Authors@R: person(given = "Miao", family = "YU",
+        role = c("aut", "cre"), 
+        email = "yufreecas@gmail.com",
+        comment = c(ORCID = "0000-0002-2804-6014"))
+Maintainer: Miao YU <yufreecas@gmail.com>
+Description: Network analysis for exposomics including generation of exposures-metabolites network, metabolites-metabolites network and gatekeeper metabolites discovery for non-targeted high resolution mass spectrometry data.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+biocViews:
+Imports: igraph,
+        impute,
+        limma,
+        stats
+Depends: 
+    R (>= 2.10)
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

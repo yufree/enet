@@ -200,7 +200,7 @@ getemnet <- function(meta,expo,cutoffm=0.9,cutoffe=0.6,nacf=0.2,...){
 #' data(meta)
 #' gk <- getgk(meta,expo)
 #' @export
-getgk <- function(meta,expo,cutoff=0.9,multiple=TRUE,...){
+getgk <- function(meta,expo,cutoff=0.9,multiple=FALSE,...){
     colindex <- match(colnames(expo),colnames(meta))
     colindex2 <- match(colnames(meta),colnames(expo))
     meta <- meta[,colindex[!is.na(colindex)]]
@@ -249,6 +249,6 @@ getgk <- function(meta,expo,cutoff=0.9,multiple=TRUE,...){
     dfx <- dfme[dfme$from %in% liname,]
     dfy <- df[df$from %in% liname|df$to %in% liname,]
     dfme <- rbind.data.frame(dfx,dfy)
-    li <- list(data=lire2, metaexp=dfme)
+    li <- list(me=tab,data=lire2, metaexp=dfme)
     return(li)
 }

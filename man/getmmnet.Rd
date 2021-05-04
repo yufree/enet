@@ -7,7 +7,7 @@
 getmmnet(meta, cutoff = 0.9, m = NULL, name = NULL, ...)
 }
 \arguments{
-\item{meta}{metabolites list with row as metabolites/peaks and column as samples}
+\item{meta}{metabolites dataframe with row as metabolites/peaks and column as samples}
 
 \item{cutoff}{correlation coefficient cutoff}
 

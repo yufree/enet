@@ -4,10 +4,10 @@
 \alias{geteenet}
 \title{Generate exposures-exposures network}
 \usage{
-geteenet(expo, cutoff = 0.6, nacf = 0.2, e = NULL, name = NULL, ...)
+geteenet(expo, cutoff = 0.9, nacf = 0.2, e = NULL, name = NULL, ...)
 }
 \arguments{
-\item{expo}{exposures list with row as exposures/peaks and column as samples}
+\item{expo}{exposures dataframe with row as exposures/peaks and column as samples}
 
 \item{cutoff}{correlation coefficient cutoff}
 

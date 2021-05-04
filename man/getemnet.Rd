@@ -7,9 +7,9 @@
 getemnet(meta, expo, cutoffm = 0.9, cutoffe = 0.6, nacf = 0.2, ...)
 }
 \arguments{
-\item{meta}{metabolites list with row as metabolites/peaks and column as samples}
+\item{meta}{metabolites dataframe with row as metabolites/peaks and column as samples}
 
-\item{expo}{exposures list with row as exposures/peaks and column as samples}
+\item{expo}{exposures dataframe with row as exposures/peaks and column as samples}
 
 \item{cutoffm}{correlation coefficient cutoff for metabolites-metabolites network}
 

@@ -247,9 +247,8 @@ getgk <- function(meta,expo,cutoff=0.9,multiple=FALSE,...){
     lire2 <- lire[sapply(lire, dim)[2,]==4]
     liname <- names(li)[sapply(lire, dim)[2,]==4]
     dfx <- dfme[dfme$from %in% liname,]
-    dfy <- df[df$from %in% liname|df$to %in% liname,]
-    dfme <- rbind.data.frame(dfx,dfy)
     tab <- table(dfx$from,dfx$to)
+    dfme <- do.call(rbind.data.frame,lire2)
     li <- list(me=tab,data=lire2, metaexp=dfme)
     return(li)
 }

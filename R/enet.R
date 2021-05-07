@@ -249,6 +249,7 @@ getgk <- function(meta,expo,cutoff=0.9,multiple=FALSE,...){
     dfx <- dfme[dfme$from %in% liname,]
     tab <- table(dfx$from,dfx$to)
     dfme <- do.call(rbind.data.frame,lire2)
+    dfme <- dfme[!duplicated(dfme),]
     li <- list(me=tab,data=lire2, metaexp=dfme)
     return(li)
 }

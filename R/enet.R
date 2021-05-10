@@ -243,13 +243,15 @@ getgk <- function(meta,expo,cutoff=0.9,multiple=FALSE,...){
         }
         lire[[i]] <- re
     }
-    message(paste(sum(sapply(lire, dim)[2,]==4),'peaks could be gatekeepers.'))
     lire2 <- lire[sapply(lire, dim)[2,]==4]
     liname <- names(li)[sapply(lire, dim)[2,]==4]
     dfx <- dfme[dfme$from %in% liname,]
     tab <- table(dfx$from,dfx$to)
-    dfme <- do.call(rbind.data.frame,lire2)
-    dfme <- dfme[!duplicated(dfme),]
+    dfme2 <- do.call(rbind.data.frame,lire2)
+    dfme2 <- dfme2[!duplicated(dfme2),]
+    name <- unique(c(dfme2$from,dfme2$to)[!c(dfme2$from,dfme2$to)%in%dfme$to])
+    message(paste(length(name), 'peaks were involved.'))
+    message(paste(sum(sapply(lire, dim)[2,]==4),'peaks could be gatekeepers.'))
     li <- list(me=tab,data=lire2, metaexp=dfme)
     return(li)
 }

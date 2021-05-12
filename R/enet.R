@@ -252,6 +252,6 @@ getgk <- function(meta,expo,cutoff=0.9,multiple=FALSE,...){
     name <- unique(c(dfme2$from,dfme2$to)[!c(dfme2$from,dfme2$to)%in%dfme$to])
     message(paste(length(name), 'peaks were involved.'))
     message(paste(sum(sapply(lire, dim)[2,]==4),'peaks could be gatekeepers.'))
-    li <- list(me=tab,data=lire2, metaexp=dfme)
+    li <- list(me=tab,data=lire2, metaexp=dfme2)
     return(li)
 }

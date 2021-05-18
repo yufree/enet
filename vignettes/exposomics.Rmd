@@ -32,7 +32,7 @@ Exposomics study try to evaluate the totality of human environmental exposures o
 
 Gatekeeper is defined as the molecular with has a mediation role between exposure(s) and other molecular. The association between gatekeepers and exposures could be generated from linear regression or other machine learning algorithms. The relationships among molecular could be built on correlation network analysis. However, as long as certain statistics could be used to describe relationship among molecular or between molecular and exposures, it's should be fine to use such concept.
 
-Here we will use a subset data from Exposome Data Challenge 2021 for demonstration purpose. The details of this dataset can be found [online](https://docs.google.com/document/d/1ul3v-sIniLuTjFB1F1CrFQIX8mrEXVnvSzOF7BCOnpQ/edit). Here we will use 177 serum metabolites as the mediation between 169 exposures and health outcome(asthma or not) from 1198 samples.
+Here we will use a subset data from Exposome Data Challenge 2021 for demonstration purpose. The details of this dataset can be found [online](https://docs.google.com/document/d/1ul3v-sIniLuTjFB1F1CrFQIX8mrEXVnvSzOF7BCOnpQ/edit). Here we will use 177 serum metabolites as the mediation between 7 selected exposures and health outcome(asthma or not) from 1198 samples.
 
 ## Check correlation among metabolites
 
@@ -57,7 +57,27 @@ Here we could find 9 metabolites correlation network clusters.
 re <- getgk(exp(meta),expo)
 ```
 
-Here we can find most of the metabolites are associated with multiple exposures and 22 of those metabolites can be defined as gatekeepers.
+Here we can find most of the metabolites are associated with multiple exposures and 14 of those metabolites can be defined as gatekeepers. The returned object is a list with three elements: `me` contains the table of associated metabolites and exposures, `data` contains a list with every gatekeepers' network and `metaexp` contain the networks of all of the gatekeepers.
+
+```{r}
+# check the table
+re$me
+# check the individual network
+n <- ggnetwork(re$data[[1]])
+ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey50",size=0.7) +
+  guides(color=F,size=F) +
+  ggtitle('Gatekeeper network') +
+  theme_blank()
+# check the network for all gatekeeper
+n <- ggnetwork(re$metaexp)
+ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey50",size=0.7) +
+  geom_nodes(aes(size = ifelse(vertex.names %in% colnames(re$me),0,1))) +
+  guides(color=F,size=F) +
+  ggtitle('Gatekeepers network') +
+  theme_blank()
+```
 
 ## Check association between gatekeepers and health outcome
 
@@ -67,5 +87,5 @@ re2 <- rowttests(metagk,factor(asthma))
 re2
 ```
 
-Here we can find three gatekeepers might mediate the influnces from multiple exposures to asthma condition.
+Here we can find two gatekeepers might mediate the influnces from multiple exposures to asthma condition.
 

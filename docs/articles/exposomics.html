@@ -117,7 +117,7 @@
 <h1 class="hasAnchor">
 <a href="#gatekeeper" class="anchor"></a>Gatekeeper</h1>
 <p>Gatekeeper is defined as the molecular with has a mediation role between exposure(s) and other molecular. The association between gatekeepers and exposures could be generated from linear regression or other machine learning algorithms. The relationships among molecular could be built on correlation network analysis. However, as long as certain statistics could be used to describe relationship among molecular or between molecular and exposures, it’s should be fine to use such concept.</p>
-<p>Here we will use a subset data from Exposome Data Challenge 2021 for demonstration purpose. The details of this dataset can be found <a href="https://docs.google.com/document/d/1ul3v-sIniLuTjFB1F1CrFQIX8mrEXVnvSzOF7BCOnpQ/edit">online</a>. Here we will use 177 serum metabolites as the mediation between 169 exposures and health outcome(asthma or not) from 1198 samples.</p>
+<p>Here we will use a subset data from Exposome Data Challenge 2021 for demonstration purpose. The details of this dataset can be found <a href="https://docs.google.com/document/d/1ul3v-sIniLuTjFB1F1CrFQIX8mrEXVnvSzOF7BCOnpQ/edit">online</a>. Here we will use 177 serum metabolites as the mediation between 7 selected exposures and health outcome(asthma or not) from 1198 samples.</p>
 <div id="check-correlation-among-metabolites" class="section level2">
 <h2 class="hasAnchor">
 <a href="#check-correlation-among-metabolites" class="anchor"></a>Check correlation among metabolites</h2>
@@ -144,14 +144,67 @@
 <code class="sourceCode R"><span class="va">re</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getgk.html">getgk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>,<span class="va">expo</span><span class="op">)</span>
 <span class="co">#&gt; 9 metabolites correlation network clusters found</span>
 <span class="co">#&gt; 155 out of 177 metabolites have no correlation with other metabolites</span>
-<span class="co">#&gt; 22 peaks were involved.</span>
-<span class="co">#&gt; 22 peaks could be gatekeepers.</span></code></pre></div>
-<p>Here we can find most of the metabolites are associated with multiple exposures and 22 of those metabolites can be defined as gatekeepers.</p>
+<span class="co">#&gt; 18 peaks were involved.</span>
+<span class="co">#&gt; 14 peaks could be gatekeepers.</span></code></pre></div>
+<p>Here we can find most of the metabolites are associated with multiple exposures and 14 of those metabolites can be defined as gatekeepers. The returned object is a list with three elements: <code>me</code> contains the table of associated metabolites and exposures, <code>data</code> contains a list with every gatekeepers’ network and <code>metaexp</code> contain the networks of all of the gatekeepers.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># check the table</span>
+<span class="va">re</span><span class="op">$</span><span class="va">me</span>
+<span class="co">#&gt;                     </span>
+<span class="co">#&gt;                      hs_as_c_Log2 hs_co_c_Log2 hs_cs_c_Log2 hs_cu_c_Log2</span>
+<span class="co">#&gt;   log.C10                       1            0            1            0</span>
+<span class="co">#&gt;   log.C14.1                     0            0            1            0</span>
+<span class="co">#&gt;   log.C16.1                     1            0            1            0</span>
+<span class="co">#&gt;   log.C8                        1            0            1            0</span>
+<span class="co">#&gt;   log.Ile                       0            0            0            1</span>
+<span class="co">#&gt;   log.Leu                       0            0            1            1</span>
+<span class="co">#&gt;   log.lysoPC.a.C24.0            0            0            1            0</span>
+<span class="co">#&gt;   log.lysoPC.a.C28.1            0            0            1            0</span>
+<span class="co">#&gt;   log.PC.aa.C38.6               1            1            1            1</span>
+<span class="co">#&gt;   log.PC.aa.C40.6               1            1            1            1</span>
+<span class="co">#&gt;   log.PC.ae.C38.5               0            0            1            0</span>
+<span class="co">#&gt;   log.SM.C18.0                  0            0            1            0</span>
+<span class="co">#&gt;   log.SM.C18.1                  0            0            1            0</span>
+<span class="co">#&gt;   log.Val                       0            0            1            1</span>
+<span class="co">#&gt;                     </span>
+<span class="co">#&gt;                      hs_sumDEHP_cadj_Log2 hs_sumPCBs5_cadj_Log2</span>
+<span class="co">#&gt;   log.C10                               0                     0</span>
+<span class="co">#&gt;   log.C14.1                             1                     1</span>
+<span class="co">#&gt;   log.C16.1                             1                     1</span>
+<span class="co">#&gt;   log.C8                                0                     0</span>
+<span class="co">#&gt;   log.Ile                               0                     0</span>
+<span class="co">#&gt;   log.Leu                               0                     0</span>
+<span class="co">#&gt;   log.lysoPC.a.C24.0                    1                     0</span>
+<span class="co">#&gt;   log.lysoPC.a.C28.1                    1                     0</span>
+<span class="co">#&gt;   log.PC.aa.C38.6                       1                     1</span>
+<span class="co">#&gt;   log.PC.aa.C40.6                       1                     1</span>
+<span class="co">#&gt;   log.PC.ae.C38.5                       0                     1</span>
+<span class="co">#&gt;   log.SM.C18.0                          1                     0</span>
+<span class="co">#&gt;   log.SM.C18.1                          1                     0</span>
+<span class="co">#&gt;   log.Val                               0                     0</span>
+<span class="co"># check the individual network</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html">ggnetwork</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">n</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">guides</span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">'Gatekeeper network'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="exposomics_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># check the network for all gatekeeper</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html">ggnetwork</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">metaexp</span><span class="op">)</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">n</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html">geom_nodes</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">vertex.names</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">me</span><span class="op">)</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">guides</span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">'Gatekeepers network'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="exposomics_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div id="check-association-between-gatekeepers-and-health-outcome" class="section level2">
 <h2 class="hasAnchor">
 <a href="#check-association-between-gatekeepers-and-health-outcome" class="anchor"></a>Check association between gatekeepers and health outcome</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metagk</span> <span class="op">&lt;-</span> <span class="va">meta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">me</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span>
 <span class="va">re2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/genefilter/man/rowFtests.html">rowttests</a></span><span class="op">(</span><span class="va">metagk</span>,<span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">asthma</span><span class="op">)</span><span class="op">)</span>
 <span class="va">re2</span>
@@ -163,22 +216,14 @@
 <span class="co">#&gt; log.Ile             1.7728963  0.066225737 0.07650037</span>
 <span class="co">#&gt; log.Leu             1.5129675  0.051428112 0.13055211</span>
 <span class="co">#&gt; log.lysoPC.a.C24.0  0.4656238  0.016894581 0.64156955</span>
-<span class="co">#&gt; log.lysoPC.a.C26.0  0.8712435  0.045811261 0.38379604</span>
-<span class="co">#&gt; log.lysoPC.a.C26.1  0.5899406  0.030885930 0.55534194</span>
-<span class="co">#&gt; log.lysoPC.a.C28.0  0.8135982  0.030564433 0.41603712</span>
 <span class="co">#&gt; log.lysoPC.a.C28.1  0.6649800  0.023563895 0.50619149</span>
 <span class="co">#&gt; log.PC.aa.C38.6     0.3396100  0.012525738 0.73420991</span>
 <span class="co">#&gt; log.PC.aa.C40.6    -0.2529167 -0.009685914 0.80037608</span>
-<span class="co">#&gt; log.PC.ae.C34.2     1.1441429  0.032072904 0.25279329</span>
-<span class="co">#&gt; log.PC.ae.C36.3     1.7237772  0.044689655 0.08500650</span>
-<span class="co">#&gt; log.PC.ae.C36.4     1.4570163  0.044856034 0.14537438</span>
 <span class="co">#&gt; log.PC.ae.C38.5     2.0828567  0.053962709 0.03747632</span>
 <span class="co">#&gt; log.SM.C18.0        0.8211743  0.020921923 0.41171065</span>
 <span class="co">#&gt; log.SM.C18.1        0.7766756  0.019275111 0.43750374</span>
-<span class="co">#&gt; log.Spermidine     -0.8758297 -0.022115663 0.38129851</span>
-<span class="co">#&gt; log.Spermine       -0.7896094 -0.051245877 0.42991243</span>
 <span class="co">#&gt; log.Val             2.2236925  0.060544251 0.02635536</span></code></pre></div>
-<p>Here we can find three gatekeepers might mediate the influnces from multiple exposures to asthma condition.</p>
+<p>Here we can find two gatekeepers might mediate the influnces from multiple exposures to asthma condition.</p>
 </div>
 </div>
   </div>

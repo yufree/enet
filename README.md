@@ -2,9 +2,10 @@
 # enet
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/yufree/enet/workflows/R-CMD-check/badge.svg)](https://github.com/yufree/enet/actions)
 <!-- badges: end -->
 
-The goal of enet is to perform network analysis between exposome and metabolites. It also include function to peroform network analysis among metabolites adn exposures.
+The goal of enet is to perform network analysis between exposome and metabolites. It also include function to perform network analysis among metabolites and exposures.
 
 ## Installation
 
@@ -20,6 +21,8 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(enet)
-## basic example code
+data(expo)
+date(meta)
+re <- getgk(exp(meta),expo)
 ```
 

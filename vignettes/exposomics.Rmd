@@ -1,5 +1,5 @@
 ---
-title: "exposomics"
+title: "Network Analysis for Exposomics Study"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{exposomics}
@@ -16,4 +16,56 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(enet)
+library(ggnetwork)
+library(igraph)
+library(UpSetR)
+data("asthma")
+data("expo")
+data("meta")
 ```
+
+# Introduction
+
+Exposomics study try to evaluate the totality of human environmental exposures on health conditions. It's not only involved in multiple exposures and multiple health outcomes, but also need other omics studies to support the relationships between exposures and health outcomes. Network analysis should be one of the best choices to describe relationship among omics. The purpose of enet package is to provide the tools to visualize network and extract certain structures for exposomics. The first application is gatekeeper discovery.
+
+# Gatekeeper
+
+Gatekeeper is defined as the molecular with has a mediation role between exposure(s) and other molecular. The association between gatekeepers and exposures could be generated from linear regression or other machine learning algorithms. The relationships among molecular could be built on correlation network analysis. However, as long as certain statistics could be used to describe relationship among molecular or between molecular and exposures, it's should be fine to use such concept.
+
+Here we will use a subset data from Exposome Data Challenge 2021 for demonstration purpose. The details of this dataset can be found [online](https://docs.google.com/document/d/1ul3v-sIniLuTjFB1F1CrFQIX8mrEXVnvSzOF7BCOnpQ/edit). Here we will use 177 serum metabolites as the mediation between 169 exposures and health outcome(asthma or not) from 1198 samples.
+
+## Check correlation among metabolites
+
+```{r}
+mnets <- getmmnet(exp(meta))
+net <- igraph::graph_from_data_frame(mnets$net,directed = F)
+igraph::V(net)$membership <- igraph::components(net)$membership
+n <- ggnetwork(net)
+ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey50",size=0.7) +
+  geom_nodes(aes(color = as.factor(membership))) +
+  guides(color=F,size=F) +
+  ggtitle('Serum Metabolites network') +
+  theme_blank()
+```
+
+Here we could find 9 metabolites correlation network clusters.
+
+## Check association between paired metabolite and exposure
+
+```{r}
+re <- getgk(exp(meta),expo)
+```
+
+Here we can find most of the metabolites are associated with multiple exposures and 22 of those metabolites can be defined as gatekeepers.
+
+## Check association between gatekeepers and health outcome
+
+```{r}
+metagk <- meta[match(rownames(re$me),rownames(meta)),]
+re2 <- genefilter::rowttests(metagk,factor(asthma))
+re2
+```
+
+Here we can find three gatekeepers might mediate the influnces from multiple exposures to asthma condition.
+

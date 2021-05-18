@@ -28,5 +28,5 @@ Generate metabolites-exposures network
 \examples{
 data(expo)
 data(meta)
-me <- getemnet(meta,expo)
+me <- getemnet(exp(meta),expo)
 }

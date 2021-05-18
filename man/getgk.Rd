@@ -26,5 +26,5 @@ Gatekeeper discovery
 \examples{
 data(expo)
 data(meta)
-gk <- getgk(meta,expo)
+gk <- getgk(exp(meta),expo)
 }

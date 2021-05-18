@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(enet)
-library(ggnetwork)
 library(igraph)
-library(UpSetR)
+library(ggnetwork)
+library(genefilter)
 data("asthma")
 data("expo")
 data("meta")
@@ -38,8 +38,8 @@ Here we will use a subset data from Exposome Data Challenge 2021 for demonstrati
 
 ```{r}
 mnets <- getmmnet(exp(meta))
-net <- igraph::graph_from_data_frame(mnets$net,directed = F)
-igraph::V(net)$membership <- igraph::components(net)$membership
+net <- graph_from_data_frame(mnets$net,directed = F)
+V(net)$membership <- components(net)$membership
 n <- ggnetwork(net)
 ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey50",size=0.7) +
@@ -63,7 +63,7 @@ Here we can find most of the metabolites are associated with multiple exposures 
 
 ```{r}
 metagk <- meta[match(rownames(re$me),rownames(meta)),]
-re2 <- genefilter::rowttests(metagk,factor(asthma))
+re2 <- rowttests(metagk,factor(asthma))
 re2
 ```
 

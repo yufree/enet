@@ -5,3 +5,4 @@
 * Added demo data from Exposome Data Challenge 2021
 * Added vignette for gatekeeper
 * Added GA
+* remove network basic

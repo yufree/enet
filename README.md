@@ -5,7 +5,7 @@
 [![R-CMD-check](https://github.com/yufree/enet/workflows/R-CMD-check/badge.svg)](https://github.com/yufree/enet/actions)
 <!-- badges: end -->
 
-The goal of enet is to perform network analysis between exposome and metabolites. It also include function to perform network analysis among metabolites and exposures.
+The goal of enet is to perform network analysis between exposome and metabolites. It also include function to perform network analysis among metabolites and exposures. At current stage, this package can be used to find gatekeepers.
 
 ## Installation
 
@@ -17,7 +17,7 @@ remotes::install_github("yufree/enet")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example to find gatekeepers
 
 ``` r
 library(enet)

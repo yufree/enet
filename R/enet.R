@@ -107,7 +107,7 @@ geteenet <- function(expo,cutoff=0.9,nacf=0.2,e=NULL, name=NULL,...){
 #' @examples
 #' data(expo)
 #' data(meta)
-#' me <- getemnet(meta,expo)
+#' me <- getemnet(exp(meta),expo)
 #' @export
 getemnet <- function(meta,expo,cutoffm=0.9,cutoffe=0.6,nacf=0.2,...){
     colindex <- match(colnames(expo),colnames(meta))
@@ -198,7 +198,7 @@ getemnet <- function(meta,expo,cutoffm=0.9,cutoffe=0.6,nacf=0.2,...){
 #' @examples
 #' data(expo)
 #' data(meta)
-#' gk <- getgk(meta,expo)
+#' gk <- getgk(exp(meta),expo)
 #' @export
 getgk <- function(meta,expo,cutoff=0.9,multiple=FALSE,...){
     colindex <- match(colnames(expo),colnames(meta))

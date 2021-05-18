@@ -4,7 +4,7 @@
 \alias{getgk}
 \title{Gatekeeper discovery}
 \usage{
-getgk(meta, expo, cutoff = 0.9, multiple = TRUE, ...)
+getgk(meta, expo, cutoff = 0.9, multiple = FALSE, ...)
 }
 \arguments{
 \item{meta}{metabolites dataframe with row as metabolites/peaks and column as samples}

@@ -10,6 +10,10 @@
 #' mm <- getmmnet(meta)
 #' @export
 getmmnet <- function(meta,cutoff=0.9,m=NULL,name=NULL, ...){
+    if(is.null(cutoff)){
+        cf <- getcf(t(meta))
+        cutoff <- cf$cutoff
+    }
     metacor <- stats::cor(t(meta),...)
     metacor[abs(metacor)<cutoff] <- 0
     df <- data.frame(from=rownames(meta)[which(lower.tri(metacor), arr.ind = T)[, 1]],to=rownames(meta)[which(lower.tri(metacor), arr.ind = T)[, 2]],cor=metacor[lower.tri(metacor)])
@@ -254,4 +258,32 @@ getgk <- function(meta,expo,cutoff=0.9,multiple=FALSE,...){
     message(paste(sum(sapply(lire, dim)[2,]==4),'peaks could be gatekeepers.'))
     li <- list(me=tab,data=lire2, metaexp=dfme2)
     return(li)
+}
+#' Get correlation cutoff by max network clusters
+#' @param mat dataframe with row as feature and column as samples
+#' @param cutoff correlation coefficient cutoff
+#' @param ... other parameters for `cor`
+#' @return list with cutoff
+#' @examples
+#' data(meta)
+#' cf <- getcf(t(meta))
+#' @export
+getcf <- function(mat, cutoff = seq(0,1,0.02),...){
+    cor <- stats::cor(mat,...)
+    ncx <- np <- c()
+    for(i in 1:length(cutoff)){
+        cor[abs(cor)<cutoff[i]] <- 0
+        df <- data.frame(from=rownames(mat)[which(lower.tri(cor), arr.ind = T)[, 1]],to=rownames(mat)[which(lower.tri(cor), arr.ind = T)[, 2]],cor=cor[lower.tri(cor)])
+        df <- df[abs(df$cor)>0,]
+        net <- igraph::graph_from_data_frame(df,directed = F)
+        netc <- igraph::components(net)
+        message(paste(netc$no, 'correlation network clusters found'))
+        ncx[i] <- netc$no
+        index <- rep(NA,length(rownames(mat)))
+        index[match(names(netc$membership),rownames(mat))] <- netc$membership
+        message(paste(sum(is.na(index)), 'out of', length(rownames(mat)), 'featuers have no correlation with other featuers'))
+        np[i] <- sum(is.na(index))
+    }
+    cutoff <- cutoff[which.max(ncx)]
+    return(list(cutoff=cutoff,nc=ncx,np=np))
 }

@@ -118,6 +118,10 @@ getemnet <- function(meta,expo,cutoffm=0.9,cutoffe=0.6,nacf=0.2,...){
     colindex2 <- match(colnames(meta),colnames(expo))
     meta <- meta[,colindex[!is.na(colindex)]]
     expo <- expo[,colindex2[!is.na(colindex2)]]
+    if(is.null(cutoffm)){
+        cf <- getcf(t(meta))
+        cutoffm <- cf$cutoff
+    }
     tst <- function(n, ...) ...elt(n)
     m <- tst(1,getmmnet(meta,cutoff = cutoffm,...),geteenet(expo,cutoff = cutoffe,nacf=nacf,...))
     e <- tst(2,getmmnet(meta,cutoff = cutoffm,...),geteenet(expo,cutoff = cutoffe,nacf=nacf,...))
@@ -273,15 +277,15 @@ getcf <- function(mat, cutoff = seq(0,1,0.02),...){
     ncx <- np <- c()
     for(i in 1:length(cutoff)){
         cor[abs(cor)<cutoff[i]] <- 0
-        df <- data.frame(from=rownames(mat)[which(lower.tri(cor), arr.ind = T)[, 1]],to=rownames(mat)[which(lower.tri(cor), arr.ind = T)[, 2]],cor=cor[lower.tri(cor)])
+        df <- data.frame(from=rownames(cor)[which(lower.tri(cor), arr.ind = T)[, 1]],to=rownames(cor)[which(lower.tri(cor), arr.ind = T)[, 2]],cor=cor[lower.tri(cor)])
         df <- df[abs(df$cor)>0,]
         net <- igraph::graph_from_data_frame(df,directed = F)
         netc <- igraph::components(net)
         message(paste(netc$no, 'correlation network clusters found'))
         ncx[i] <- netc$no
-        index <- rep(NA,length(rownames(mat)))
-        index[match(names(netc$membership),rownames(mat))] <- netc$membership
-        message(paste(sum(is.na(index)), 'out of', length(rownames(mat)), 'featuers have no correlation with other featuers'))
+        index <- rep(NA,length(rownames(cor)))
+        index[match(names(netc$membership),rownames(cor))] <- netc$membership
+        message(paste(sum(is.na(index)), 'out of', length(rownames(cor)), 'featuers have no correlation with other featuers'))
         np[i] <- sum(is.na(index))
     }
     cutoff <- cutoff[which.max(ncx)]

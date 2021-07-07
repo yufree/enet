@@ -133,7 +133,9 @@
   <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html">geom_nodes</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">membership</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">guides</span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggtitle</span><span class="op">(</span><span class="st">'Serum Metabolites network'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
+<span class="co">#&gt; "none")` instead.</span></code></pre></div>
 <p><img src="exposomics_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>Here we could find 9 metabolites correlation network clusters.</p>
 </div>
@@ -188,7 +190,9 @@
   <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">guides</span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggtitle</span><span class="op">(</span><span class="st">'Gatekeeper network'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
+<span class="co">#&gt; "none")` instead.</span></code></pre></div>
 <p><img src="exposomics_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check the network for all gatekeeper</span>
@@ -198,7 +202,9 @@
   <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html">geom_nodes</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">vertex.names</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">me</span><span class="op">)</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">guides</span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggtitle</span><span class="op">(</span><span class="st">'Gatekeepers network'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
+<span class="co">#&gt; "none")` instead.</span></code></pre></div>
 <p><img src="exposomics_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div id="check-association-between-gatekeepers-and-health-outcome" class="section level2">

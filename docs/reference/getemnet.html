@@ -173,10 +173,23 @@
     <p>list with table of metabolites-exposures, metabolites-exposures network clusters data and edge table</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>expo</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>meta</span><span class='op'>)</span>
-<span class='va'>me</span> <span class='op'>&lt;-</span> <span class='fu'>getemnet</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>meta</span><span class='op'>)</span>,<span class='va'>expo</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>9 metabolites correlation network clusters found</span></div><div class='output co'>#&gt; <span class='message'>155 out of 177 metabolites have no correlation with other metabolites</span></div><div class='output co'>#&gt; <span class='message'>7 exposures could be used for network analysis</span></div><div class='output co'>#&gt; <span class='message'>exposures have no correlation with each others.</span></div><div class='output co'>#&gt; <span class='message'>116 peaks with multiple exposures associated</span></div><div class='output co'>#&gt; <span class='message'>27 peaks with 3 exposures associated</span></div><div class='output co'>#&gt; <span class='message'>14 peaks with 5 exposures associated</span></div><div class='output co'>#&gt; <span class='message'>32 peaks with 1 exposures associated</span></div><div class='output co'>#&gt; <span class='message'>49 peaks with 2 exposures associated</span></div><div class='output co'>#&gt; <span class='message'>13 peaks with 4 exposures associated</span></div><div class='output co'>#&gt; <span class='message'>13 peaks with 6 exposures associated</span></div><div class='output co'>#&gt; <span class='message'>14 peaks connected with other peaks and exposures</span></div><div class='output co'>#&gt; <span class='message'>134 peaks connected with exposures only</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>expo</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>meta</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>me</span> <span class='op'>&lt;-</span> <span class='fu'>getemnet</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>meta</span><span class='op'>)</span>,<span class='va'>expo</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 9 metabolites correlation network clusters found</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 155 out of 177 metabolites have no correlation with other metabolites</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 7 exposures could be used for network analysis</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> exposures have no correlation with each others.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 116 peaks with multiple exposures associated</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 27 peaks with 3 exposures associated</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 14 peaks with 5 exposures associated</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 32 peaks with 1 exposures associated</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 49 peaks with 2 exposures associated</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 13 peaks with 4 exposures associated</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 13 peaks with 6 exposures associated</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 14 peaks connected with other peaks and exposures</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 134 peaks connected with exposures only</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

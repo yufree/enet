@@ -87,5 +87,5 @@ re2 <- rowttests(metagk,factor(asthma))
 re2
 ```
 
-Here we can find two gatekeepers might mediate the influnces from multiple exposures to asthma condition.
+Here we can find two gatekeepers might mediate the influences from multiple exposures to asthma condition.
 

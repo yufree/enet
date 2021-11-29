@@ -289,5 +289,6 @@ getcf <- function(mat, cutoff = seq(0,1,0.02),...){
         np[i] <- sum(is.na(index))
     }
     cutoff <- cutoff[which.max(ncx)]
+    message(paste(cutoff,'is selected as correlation cutoff.'))
     return(list(cutoff=cutoff,nc=ncx,np=np))
 }

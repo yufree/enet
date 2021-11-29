@@ -22,7 +22,7 @@ This is a basic example to find gatekeepers
 ``` r
 library(enet)
 data(expo)
-date(meta)
+data(meta)
 re <- getgk(exp(meta),expo)
 ```
 

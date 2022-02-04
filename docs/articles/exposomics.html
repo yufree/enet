@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,18 +39,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">enet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -92,8 +88,8 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">enet</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">enet</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'igraph'</span>
 <span class="co">#&gt; The following objects are masked from 'package:stats':</span>
@@ -102,54 +98,185 @@
 <span class="co">#&gt; The following object is masked from 'package:base':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     union</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/briatte/ggnetwork">ggnetwork</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/briatte/ggnetwork" class="external-link">ggnetwork</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: ggplot2</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">genefilter</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"asthma"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"expo"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"meta"</span><span class="op">)</span></code></pre></div>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">genefilter</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"asthma"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"expo"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"meta"</span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>Exposomics study try to evaluate the totality of human environmental exposures on health conditions. It’s not only involved in multiple exposures and multiple health outcomes, but also need other omics studies to support the relationships between exposures and health outcomes. Network analysis should be one of the best choices to describe relationship among omics. The purpose of enet package is to provide the tools to visualize network and extract certain structures for exposomics. The first application is gatekeeper discovery.</p>
 </div>
-<div id="gatekeeper" class="section level1">
-<h1 class="hasAnchor">
-<a href="#gatekeeper" class="anchor"></a>Gatekeeper</h1>
+<div class="section level2">
+<h2 id="gatekeeper">Gatekeeper<a class="anchor" aria-label="anchor" href="#gatekeeper"></a>
+</h2>
 <p>Gatekeeper is defined as the molecular with has a mediation role between exposure(s) and other molecular. The association between gatekeepers and exposures could be generated from linear regression or other machine learning algorithms. The relationships among molecular could be built on correlation network analysis. However, as long as certain statistics could be used to describe relationship among molecular or between molecular and exposures, it’s should be fine to use such concept.</p>
-<p>Here we will use a subset data from Exposome Data Challenge 2021 for demonstration purpose. The details of this dataset can be found <a href="https://docs.google.com/document/d/1ul3v-sIniLuTjFB1F1CrFQIX8mrEXVnvSzOF7BCOnpQ/edit">online</a>. Here we will use 177 serum metabolites as the mediation between 7 selected exposures and health outcome(asthma or not) from 1198 samples.</p>
-<div id="check-correlation-among-metabolites" class="section level2">
-<h2 class="hasAnchor">
-<a href="#check-correlation-among-metabolites" class="anchor"></a>Check correlation among metabolites</h2>
+<p>Here we will use a subset data from Exposome Data Challenge 2021 for demonstration purpose. The details of this dataset can be found <a href="https://docs.google.com/document/d/1ul3v-sIniLuTjFB1F1CrFQIX8mrEXVnvSzOF7BCOnpQ/edit" class="external-link">online</a>. Here we will use 177 serum metabolites as the mediation between 7 selected exposures and health outcome(asthma or not) from 1198 samples.</p>
+<div class="section level3">
+<h3 id="check-correlation-among-metabolites">Check correlation among metabolites<a class="anchor" aria-label="anchor" href="#check-correlation-among-metabolites"></a>
+</h3>
+<p>The first step of Gatekeeper is to find the active metabolites. Here we defined active metabolites as the metabolites associated with other metabolites. If a metabolite is not associated with any other metabolites, it’s hard to say such a molecular is active in the bio-system.</p>
+<p>Then we need to define the association among metabolites. A intuitively association is correlation. If two metabolites are correlated, they might play role in certain biological pathway. If multiple metabolites are correlated as a network, those metabolites should be in one active pathway. Here we can check such correlation network in our demo data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mnets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getmmnet.html">getmmnet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">mnets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getmmnet.html">getmmnet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; 9 metabolites correlation network clusters found</span>
 <span class="co">#&gt; 155 out of 177 metabolites have no correlation with other metabolites</span>
-<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">graph_from_data_frame</a></span><span class="op">(</span><span class="va">mnets</span><span class="op">$</span><span class="va">net</span>,directed <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">$</span><span class="va">membership</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html">components</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">$</span><span class="va">membership</span>
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html">ggnetwork</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html">geom_nodes</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">membership</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Serum Metabolites network'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span><span class="va">mnets</span><span class="op">$</span><span class="va">net</span>,directed <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">$</span><span class="va">membership</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html" class="external-link">components</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">$</span><span class="va">membership</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html" class="external-link">ggnetwork</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html" class="external-link">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html" class="external-link">geom_nodes</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">membership</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">'Serum Metabolites network'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html" class="external-link">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
 <span class="co">#&gt; "none")` instead.</span></code></pre></div>
 <p><img src="exposomics_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>Here we could find 9 metabolites correlation network clusters.</p>
 </div>
-<div id="check-association-between-paired-metabolite-and-exposure" class="section level2">
-<h2 class="hasAnchor">
-<a href="#check-association-between-paired-metabolite-and-exposure" class="anchor"></a>Check association between paired metabolite and exposure</h2>
+<div class="section level3">
+<h3 id="correlation-coefficient-cutoff-selection">Correlation coefficient cutoff selection<a class="anchor" aria-label="anchor" href="#correlation-coefficient-cutoff-selection"></a>
+</h3>
+<p>Correlation coefficient cutoff could also be selected by the data. If the cutoff is too small, all the metabolites will be connected as one cluster. However, if the cutoff is too high, only a few metabolites can be used for further discussion and loss information. In this case, the metabolites cluster number will increase and then decrease. Here, we developed a function to find the cutoff based on the data with largest numbers of clusters.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">re</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getgk.html">getgk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>,<span class="va">expo</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">cutoff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getcf.html">getcf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 0 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 1 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 2 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 2 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 3 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 3 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 3 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 4 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 4 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 4 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 6 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 8 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 9 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 11 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 14 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 1 correlation network clusters found</span>
+<span class="co">#&gt; 15 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 2 correlation network clusters found</span>
+<span class="co">#&gt; 16 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 3 correlation network clusters found</span>
+<span class="co">#&gt; 18 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 4 correlation network clusters found</span>
+<span class="co">#&gt; 20 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 5 correlation network clusters found</span>
+<span class="co">#&gt; 21 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 6 correlation network clusters found</span>
+<span class="co">#&gt; 23 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 6 correlation network clusters found</span>
+<span class="co">#&gt; 26 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 8 correlation network clusters found</span>
+<span class="co">#&gt; 30 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 7 correlation network clusters found</span>
+<span class="co">#&gt; 35 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 7 correlation network clusters found</span>
+<span class="co">#&gt; 37 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 6 correlation network clusters found</span>
+<span class="co">#&gt; 41 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 7 correlation network clusters found</span>
+<span class="co">#&gt; 44 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 5 correlation network clusters found</span>
+<span class="co">#&gt; 49 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 8 correlation network clusters found</span>
+<span class="co">#&gt; 53 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 10 correlation network clusters found</span>
+<span class="co">#&gt; 58 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 13 correlation network clusters found</span>
+<span class="co">#&gt; 66 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 15 correlation network clusters found</span>
+<span class="co">#&gt; 72 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 15 correlation network clusters found</span>
+<span class="co">#&gt; 79 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 20 correlation network clusters found</span>
+<span class="co">#&gt; 95 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 20 correlation network clusters found</span>
+<span class="co">#&gt; 108 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 20 correlation network clusters found</span>
+<span class="co">#&gt; 113 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 20 correlation network clusters found</span>
+<span class="co">#&gt; 127 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 17 correlation network clusters found</span>
+<span class="co">#&gt; 137 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 9 correlation network clusters found</span>
+<span class="co">#&gt; 155 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 6 correlation network clusters found</span>
+<span class="co">#&gt; 162 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 3 correlation network clusters found</span>
+<span class="co">#&gt; 171 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 2 correlation network clusters found</span>
+<span class="co">#&gt; 173 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 0 correlation network clusters found</span>
+<span class="co">#&gt; 177 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 0 correlation network clusters found</span>
+<span class="co">#&gt; 177 out of 177 featuers have no correlation with other featuers</span>
+<span class="co">#&gt; 0.8 is selected as correlation cutoff.</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cutoff</span><span class="op">$</span><span class="va">nc</span><span class="op">~</span><span class="va">cutoff</span><span class="op">$</span><span class="va">np</span>,xlab <span class="op">=</span> <span class="st">'metabolites numbers'</span>,ylab <span class="op">=</span> <span class="st">'cluster numbers'</span>,type<span class="op">=</span><span class="st">'o'</span><span class="op">)</span></code></pre></div>
+<p><img src="exposomics_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># use the selected cutoff to find active metabolites</span>
+<span class="va">mnets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getmmnet.html">getmmnet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>,cutoff <span class="op">=</span> <span class="va">cutoff</span><span class="op">$</span><span class="va">cutoff</span><span class="op">)</span>
+<span class="co">#&gt; 20 metabolites correlation network clusters found</span>
+<span class="co">#&gt; 95 out of 177 metabolites have no correlation with other metabolites</span>
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span><span class="va">mnets</span><span class="op">$</span><span class="va">net</span>,directed <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">$</span><span class="va">membership</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html" class="external-link">components</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">$</span><span class="va">membership</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html" class="external-link">ggnetwork</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html" class="external-link">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html" class="external-link">geom_nodes</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">membership</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">'Serum Metabolites network'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html" class="external-link">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
+<span class="co">#&gt; "none")` instead.</span></code></pre></div>
+<p><img src="exposomics_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="check-association-between-paired-metabolite-and-exposure">Check association between paired metabolite and exposure<a class="anchor" aria-label="anchor" href="#check-association-between-paired-metabolite-and-exposure"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">re</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getgk.html">getgk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>,<span class="va">expo</span><span class="op">)</span>
 <span class="co">#&gt; 9 metabolites correlation network clusters found</span>
 <span class="co">#&gt; 155 out of 177 metabolites have no correlation with other metabolites</span>
 <span class="co">#&gt; 18 peaks were involved.</span>
 <span class="co">#&gt; 14 peaks could be gatekeepers.</span></code></pre></div>
 <p>Here we can find most of the metabolites are associated with multiple exposures and 14 of those metabolites can be defined as gatekeepers. The returned object is a list with three elements: <code>me</code> contains the table of associated metabolites and exposures, <code>data</code> contains a list with every gatekeepers’ network and <code>metaexp</code> contain the networks of all of the gatekeepers.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check the table</span>
 <span class="va">re</span><span class="op">$</span><span class="va">me</span>
 <span class="co">#&gt;                     </span>
@@ -185,34 +312,34 @@
 <span class="co">#&gt;   log.SM.C18.1                          1                     0</span>
 <span class="co">#&gt;   log.Val                               0                     0</span>
 <span class="co"># check the individual network</span>
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html">ggnetwork</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Gatekeeper network'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html" class="external-link">ggnetwork</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html" class="external-link">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">'Gatekeeper network'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html" class="external-link">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
 <span class="co">#&gt; "none")` instead.</span></code></pre></div>
-<p><img src="exposomics_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p><img src="exposomics_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check the network for all gatekeeper</span>
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html">ggnetwork</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">metaexp</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html">geom_nodes</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">vertex.names</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">me</span><span class="op">)</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Gatekeepers network'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/ggnetwork.html" class="external-link">ggnetwork</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">metaexp</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_edges.html" class="external-link">geom_edges</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey50"</span>,size<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html" class="external-link">geom_nodes</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">vertex.names</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">me</span><span class="op">)</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="cn">F</span>,size<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">'Gatekeepers network'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggnetwork/man/theme_blank.html" class="external-link">theme_blank</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
 <span class="co">#&gt; "none")` instead.</span></code></pre></div>
-<p><img src="exposomics_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
+<p><img src="exposomics_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 </div>
-<div id="check-association-between-gatekeepers-and-health-outcome" class="section level2">
-<h2 class="hasAnchor">
-<a href="#check-association-between-gatekeepers-and-health-outcome" class="anchor"></a>Check association between gatekeepers and health outcome</h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">metagk</span> <span class="op">&lt;-</span> <span class="va">meta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">me</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">re2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/genefilter/man/rowFtests.html">rowttests</a></span><span class="op">(</span><span class="va">metagk</span>,<span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">asthma</span><span class="op">)</span><span class="op">)</span>
+<div class="section level3">
+<h3 id="check-association-between-gatekeepers-and-health-outcome">Check association between gatekeepers and health outcome<a class="anchor" aria-label="anchor" href="#check-association-between-gatekeepers-and-health-outcome"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">metagk</span> <span class="op">&lt;-</span> <span class="va">meta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">re</span><span class="op">$</span><span class="va">me</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span>
+<span class="va">re2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/genefilter/man/rowFtests.html" class="external-link">rowttests</a></span><span class="op">(</span><span class="va">metagk</span>,<span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">asthma</span><span class="op">)</span><span class="op">)</span>
 <span class="va">re2</span>
 <span class="co">#&gt;                     statistic           dm    p.value</span>
 <span class="co">#&gt; log.C10             1.8753954  0.066032691 0.06098182</span>
@@ -245,11 +372,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Miao YU.</p>
+  <p></p>
+<p>Developed by Miao YU.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -257,6 +386,8 @@
 
   
 
+
+  
 
   </body>
 </html>

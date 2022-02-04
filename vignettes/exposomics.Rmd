@@ -36,6 +36,10 @@ Here we will use a subset data from Exposome Data Challenge 2021 for demonstrati
 
 ## Check correlation among metabolites
 
+The first step of Gatekeeper is to find the active metabolites. Here we defined active metabolites as the metabolites associated with other metabolites. If a metabolite is not associated with any other metabolites, it's hard to say such a molecular is active in the bio-system. 
+
+Then we need to define the association among metabolites. A intuitively association is correlation. If two metabolites are correlated, they might play role in certain biological pathway. If multiple metabolites are correlated as a network, those metabolites should be in one active pathway. Here we can check such correlation network in our demo data.
+
 ```{r}
 mnets <- getmmnet(exp(meta))
 net <- graph_from_data_frame(mnets$net,directed = F)
@@ -50,6 +54,26 @@ ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) +
 ```
 
 Here we could find 9 metabolites correlation network clusters.
+
+## Correlation coefficient cutoff selection
+
+Correlation coefficient cutoff could also be selected by the data. If the cutoff is too small, all the metabolites will be connected as one cluster. However, if the cutoff is too high, only a few metabolites can be used for further discussion and loss information. In this case, the metabolites cluster number will increase and then decrease. Here, we developed a function to find the cutoff based on the data with largest numbers of clusters.
+
+```{r}
+cutoff <- getcf(t(exp(meta)))
+plot(cutoff$nc~cutoff$np,xlab = 'metabolites numbers',ylab = 'cluster numbers',type='o')
+# use the selected cutoff to find active metabolites
+mnets <- getmmnet(exp(meta),cutoff = cutoff$cutoff)
+net <- graph_from_data_frame(mnets$net,directed = F)
+V(net)$membership <- components(net)$membership
+n <- ggnetwork(net)
+ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey50",size=0.7) +
+  geom_nodes(aes(color = as.factor(membership))) +
+  guides(color=F,size=F) +
+  ggtitle('Serum Metabolites network') +
+  theme_blank()
+```
 
 ## Check association between paired metabolite and exposure
 

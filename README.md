@@ -26,3 +26,7 @@ data(meta)
 re <- getgk(exp(meta),expo)
 ```
 
+## Citation
+
+- Yu, M.; Teitelbaum, S. L.; Dolios, G.; Dang, L.-H. T.; Tu, P.; Wolff, M. S.; Petrick, L. M. Molecular Gatekeeper Discovery: Workflow for Linking Multiple Exposure Biomarkers to Metabolomics. Environ. Sci. Technol. 2022. https://doi.org/10.1021/acs.est.1c04039.
+

@@ -1,0 +1,13 @@
+citHeader("To cite enet in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Molecular Gatekeeper Discovery: Workflow for Linking Multiple Exposure Biomarkers to Metabolomics.",
+  author   = "Yu, M.; Teitelbaum, S. L.; Dolios, G.; Dang, L.-H. T.; Tu, P.; Wolff, M. S.; Petrick, L. M.",
+  journal  = "Environ. Sci. Technol.",
+  year     = "2022",
+  url      = "https://doi.org/10.1021/acs.est.1c04039.",
+  textVersion = paste("Yu, M.; Teitelbaum, S. L.; Dolios, G.; Dang, L.-H. T.; Tu, P.; Wolff, M. S.; Petrick, L. M.","Molecular Gatekeeper Discovery: Workflow for Linking Multiple Exposure Biomarkers to Metabolomics.","Environ. Sci. Technol","2022."
+
+  )
+)
